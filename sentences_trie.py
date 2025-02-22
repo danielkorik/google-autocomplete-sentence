@@ -1,6 +1,12 @@
 class Node:
-    """Define a single node in the trie"""
+    """
+            Inserts a sentence into the trie. Each character of the sentence is added as a node in the trie if it does not already exist.
 
+            Args:
+                sentence (str): The sentence to be inserted into the trie.
+                index (tuple): A tuple containing the index of the sentence in the original list and the position within the sentence.
+
+    """
     def __init__(self, char):
         self.char = char
         self.sentences_indexes = {}

@@ -1,9 +1,8 @@
 from auto_completion import AutoCompletion
 
-
 def user_interface(auto_complete):
     """Get an input sentence from the user and print the completion suggestions.
-          Type '#" to end the current input and start a new one, or 'exit' to quit the program."""
+          Type '#' to end the current input and start a new one, or 'exit' to quit the program."""
     print("Welcome to the Auto-Completion system!")
     print("Type your text and press enter for suggestions.")
     print("Type '#' at any time to end the current input and start anew, or type 'exit' to quit.")
@@ -15,7 +14,7 @@ def user_interface(auto_complete):
             break
         sentence = _input[:]
         node = auto_complete.data_manager.get_trie_structure().root
-        while _input != "#":
+        while True:
             completions, node = auto_complete.aggregate_completions(sentence, node, len(sentence))
             if not len(completions):
                 print("Sorry, no suggestions found. Type '#' to start a new input...")
@@ -25,11 +24,19 @@ def user_interface(auto_complete):
                     print(f"{i+1}. " + completions[i])
             print()
             _input = input(sentence)
+            if _input.lower() == "exit":
+                print("Exiting the program...")
+                return  # Ensure to exit function completely
+            if _input == "#":
+                break
             sentence += _input
 
+        # Check again after breaking out of the inner loop:
+        if _input.lower() == "exit":
+            print("Exiting the program...")
+            break
 
 if __name__ == '__main__':
     auto_complete = AutoCompletion()
     auto_complete.data_manager.initialize_data()
     user_interface(auto_complete)
-
